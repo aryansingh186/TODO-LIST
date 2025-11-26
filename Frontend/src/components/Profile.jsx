@@ -61,7 +61,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    toast.info("You have been logged out. See you soon! 👋");
+    toast.info("You have been logged out.");
     setTimeout(() => navigate("/login"), 800);
   };
 
