@@ -30,8 +30,8 @@ export const register = async (req, res) => {
     res.status(201).json({ message: "User registered successfully" });
 
   } catch (error) {
-    console.error("Register Error:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Register Error:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -42,6 +42,12 @@ export const login = async (req, res) => {
 
     if (!email || !password) {
       return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    // Check if JWT_SECRET is set
+    if (!process.env.JWT_SECRET) {
+      console.error("JWT_SECRET is not defined in environment variables");
+      return res.status(500).json({ message: "Server configuration error" });
     }
 
     const user = await User.findOne({ email });
@@ -55,18 +61,27 @@ export const login = async (req, res) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    // Create JWT token
+    // Generate token
     const token = jwt.sign(
-      { id: user._id, email: user.email },
+      { id: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "7d" }
     );
 
-    res.status(200).json({ message: "Login successful", token });
+    res.status(200).json({ 
+      message: "Login successful", 
+      token,
+      user: {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
+      }
+    });
 
   } catch (error) {
-    console.error("Login Error:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Login Error:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -77,6 +92,11 @@ export const getProfile = async (req, res) => {
 
     if (!token) {
       return res.status(401).json({ message: "No token provided" });
+    }
+
+    if (!process.env.JWT_SECRET) {
+      console.error("JWT_SECRET is not defined");
+      return res.status(500).json({ message: "Server configuration error" });
     }
 
     // Verify token
@@ -98,8 +118,8 @@ export const getProfile = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Profile Error:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Profile Error:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -115,8 +135,8 @@ export const deleteUser = async (req, res) => {
     res.status(200).json({ message: "User deleted successfully" });
 
   } catch (error) {
-    console.error("Delete User Error:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Delete User Error:", error.message);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 

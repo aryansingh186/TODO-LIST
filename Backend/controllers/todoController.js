@@ -1,20 +1,9 @@
 import Todo from "../models/todoModel.js";
-import jwt from "jsonwebtoken";
-
-// Helper function to get user ID from token
-const getUserIdFromToken = (req) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) {
-    throw new Error("No token provided");
-  }
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  return decoded.id;
-};
 
 // Get all todos for the logged-in user
 export const getTodos = async (req, res) => {
   try {
-    const userId = getUserIdFromToken(req);
+    const userId = req.userId; // Now comes from protect middleware
     
     // Only fetch todos that belong to this user
     const todos = await Todo.find({ userId }).sort({ createdAt: -1 });
@@ -29,7 +18,7 @@ export const getTodos = async (req, res) => {
 // Create a new todo
 export const createTodo = async (req, res) => {
   try {
-    const userId = getUserIdFromToken(req);
+    const userId = req.userId; // Now comes from protect middleware
     const { text, completed } = req.body;
 
     if (!text) {
@@ -53,7 +42,7 @@ export const createTodo = async (req, res) => {
 // Update a todo
 export const updateTodo = async (req, res) => {
   try {
-    const userId = getUserIdFromToken(req);
+    const userId = req.userId; // Now comes from protect middleware
     const { id } = req.params;
     const { text, completed } = req.body;
 
@@ -79,7 +68,7 @@ export const updateTodo = async (req, res) => {
 // Delete a todo
 export const deleteTodo = async (req, res) => {
   try {
-    const userId = getUserIdFromToken(req);
+    const userId = req.userId; // Now comes from protect middleware
     const { id } = req.params;
 
     // Find and delete only if it belongs to this user

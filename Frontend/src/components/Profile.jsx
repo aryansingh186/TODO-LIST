@@ -8,7 +8,8 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const API_URL = "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 
   useEffect(() => {
     fetchProfile();
@@ -61,7 +62,7 @@ const Profile = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    toast.info("You have been logged out.");
+    toast.info("You have been logged out");
     setTimeout(() => navigate("/login"), 800);
   };
 

@@ -10,7 +10,9 @@ const Login = () => {
   const [success, setSuccess] = useState("");
 
   const navigate = useNavigate();
-  const API_URL = "http://localhost:5000";
+   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +41,6 @@ const Login = () => {
 
       setSuccess("Login successful! Redirecting...");
       
-      // Store token if provided
       if (data.token) {
         localStorage.setItem("token", data.token);
       }
@@ -47,7 +48,7 @@ const Login = () => {
       setEmail("");
       setPassword("");
 
-      // Redirect to home after 1.5 seconds
+    
       setTimeout(() => {
         navigate("/");
       }, 1500);

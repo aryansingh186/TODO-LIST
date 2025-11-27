@@ -1,16 +1,19 @@
 import express from "express";
+import { protect } from "../middleware/authMiddleware.js"; 
+
 import { 
   createTodo, 
   getTodos,
   updateTodo, 
-  deleteTodo } 
-  from "../controllers/todoController.js";
+  deleteTodo 
+} from "../controllers/todoController.js";
 
 const router = express.Router();
 
-router.get("/", getTodos);           
-router.post("/", createTodo);        
-router.put("/:id", updateTodo);      
-router.delete("/:id", deleteTodo);   
+// Add protect middleware to ALL routes
+router.get("/", protect, getTodos);           
+router.post("/", protect, createTodo);        
+router.put("/:id", protect, updateTodo);      
+router.delete("/:id", protect, deleteTodo);   
 
 export default router;
