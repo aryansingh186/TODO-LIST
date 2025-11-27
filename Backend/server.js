@@ -10,16 +10,17 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
+import cors from "cors";
+import express from "express";
 
 app.use(cors({
-  origin: [
-    "https://todo-list-6zxa.vercel.app",
-    "http://localhost:5173"
-  ],
+  origin: "https://todo-list-bnrj.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
+  credentials: true,
 }));
+
+app.use(express.json());
+
 
 
 // DB Connection
