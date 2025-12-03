@@ -1,7 +1,7 @@
-theme: {
-  extend: {
-    borderRadius: {
-      'checkbox': '6px'
-    },
+module.exports = {
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  theme: {
+    extend: {},
   },
-}
+  plugins: [],
+};

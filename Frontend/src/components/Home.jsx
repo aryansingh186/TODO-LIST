@@ -8,7 +8,7 @@ const Home = () => {
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = "http://localhost:5000";
 
 
   const getAuthHeaders = () => {
@@ -135,10 +135,10 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
   };
 
   return (
-    <div className="min-h-screen relative flex justify-center items-center p-6">
+    <div className="min-h-screen relative flex justify-center items-center p-6 ">
 
       {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 " ></div>
 
       {/* Decorative Shapes */}
       <div className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
@@ -223,7 +223,7 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
         </div>
 
         {/* Task List */}
-        <div className="p-6 max-h-96 overflow-y-auto">
+        <div className="p-6 h-60 overflow-y-auto scrollbar-hide">
           {loading ? (
             <div className="flex justify-center items-center py-12">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>

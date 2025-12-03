@@ -1,8 +1,29 @@
 import React from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 import { Mail, Phone, Github, Twitter, Linkedin, Heart } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [userEmail, setUserEmail] = React.useState("");
+
+  const handleSubscribe = async () => {
+    try {
+      if (!userEmail) return  toast.info("Please enter your email.");
+
+
+      const res = await axios.post(
+        "http://localhost:5000/api/subscribe",
+        { email: userEmail }
+      );
+
+       toast.info(res.data.message);
+      setUserEmail(""); 
+
+    } catch (err) {
+       toast.info(err.response?.data?.message || "Something went wrong");
+    }
+  };
 
   return (
     <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-300">
@@ -71,13 +92,13 @@ const Footer = () => {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2">
                 <Mail size={16} className="text-indigo-400" />
-                <a href="mailto:info@todoapp.com" className="hover:text-white transition">
+                <a href="mailto:aryansingh000@gmail.com" className="hover:text-white transition">
                   aryansingh000@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Phone size={16} className="text-indigo-400" />
-                <a href="tel:+1234567890" className="hover:text-white transition">
+                <a href="tel:+917050000000" className="hover:text-white transition">
                   +91 (7050) xxx-xxx
                 </a>
               </li>
@@ -90,9 +111,14 @@ const Footer = () => {
                 <input 
                   type="email" 
                   placeholder="Your email" 
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
                   className="flex-1 px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-sm focus:outline-none focus:border-indigo-500 transition"
                 />
-                <button className="bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition">
+                <button 
+                  onClick={handleSubscribe}
+                  className="bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-2 rounded-lg text-sm font-medium hover:shadow-lg transition"
+                >
                   Join
                 </button>
               </div>

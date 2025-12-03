@@ -24,7 +24,7 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
         return;
       }
 
-      // Decode JWT to get user info
+  
       const decoded = JSON.parse(atob(token.split(".")[1]));
       
       // Fetch user details from backend
@@ -40,13 +40,13 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
         const data = await response.json();
         setProfile(data.user);
       } else {
-        // Fallback: Get email from token
+        
         setProfile({ email: decoded.email });
       }
     } catch (err) {
       console.log("Profile Error:", err);
       
-      // Fallback: Get email from token
+
       try {
         const token = localStorage.getItem("token");
         const decoded = JSON.parse(atob(token.split(".")[1]));
@@ -63,7 +63,7 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const handleLogout = () => {
     localStorage.removeItem("token");
     toast.info("You have been logged out");
-    setTimeout(() => navigate("/login"), 800);
+    setTimeout(() => navigate("/Login"), 800);
   };
 
   if (loading) {
