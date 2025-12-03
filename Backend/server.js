@@ -12,9 +12,9 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors({
   origin: [
-    "https://todo-list-dvqu.vercel.app", 
-    "http://localhost:5173" 
-  ],
+  "https://todo-list-dvqu.vercel.app",
+  "http://localhost:5173"
+],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
