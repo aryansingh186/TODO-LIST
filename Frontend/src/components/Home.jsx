@@ -8,7 +8,8 @@ const Home = () => {
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
 
-const API_URL = "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL ;
+;
 
 
   const getAuthHeaders = () => {
